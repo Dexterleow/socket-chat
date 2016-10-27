@@ -3,10 +3,20 @@ app = express(),
 server = require('http').createServer(app),
 io = require('socket.io').listen(server),
 //array to put all the nicknames
+// mongoose = require('mongoose'),
+
 users = {};
 
-
 server.listen(3000);
+
+//mongoose will automatically create the database
+// mongoose.connect('mongodb://localhost/chat', function(err){
+//   if(err){
+//     console.log(err);
+//   } else {
+//     console.log('Connected to mongodb!');
+//   }
+// });
 
 // routing
 app.get('/', function(req, res) {
