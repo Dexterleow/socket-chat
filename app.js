@@ -91,6 +91,11 @@ io.sockets.on('connection', function(socket){
     }
   });
 
+    //check if user is typing
+  socket.on('typing', function(currentUser){
+    io.sockets.emit('isTyping', currentUser)
+  });
+
   socket.on('disconnect', function(data){
     if(!socket.nickname) return;
     //get rid of elements in the array
