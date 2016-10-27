@@ -1,11 +1,18 @@
-var express = require('express'),
-app = express(),
-server = require('http').createServer(app),
-io = require('socket.io').listen(server),
+var express = require('express')
+var app = express()
+var server = require('http').createServer(app)
+var io = require('socket.io').listen(server)
 //array to put all the nicknames
 // mongoose = require('mongoose'),
 
+app.use(express.static('public'));
+
+
 users = {};
+
+// rooms which are currently available in chat
+var rooms = ['Hollywood','New York','Sci-Fi City','Ancient Egypt','Lost World','Far Far Away','Madagascar'];
+
 
 server.listen(3000);
 
@@ -37,8 +44,21 @@ io.sockets.on('connection', function(socket){
       //
       users[socket.nickname] = socket;
       updateNicknames();
+
+      // //assigning the rooms
+      // socket.room = 'Hollywood';
+      // // send client to room 1
+      // socket.join('Hollywood');
+
     }
   });
+
+  // socket.on('switchRoom', function(newroom){
+  // socket.leave(socket.room);
+  // socket.join(newroom);
+  // // update socket session room title
+  // socket.room = newroom;
+// });
 
   function updateNicknames () {
     io.sockets.emit('usernames', Object.keys(users));
